@@ -5,7 +5,7 @@ library(tidyr)
 library(shiny)
 
 # call api
-data <- fromJSON("https://data.wprdc.org/api/3/action/datastore_search?resource_id=ff33ca18-2e0c-4cb5-bdcd-60a5dc3c0418&limit=780698", 
+data <- fromJSON("https://data.wprdc.org/api/3/action/datastore_search?resource_id=ff33ca18-2e0c-4cb5-bdcd-60a5dc3c0418", 
                  flatten = TRUE)$result
 
 # pull data from api response
@@ -17,3 +17,13 @@ ods <- as.data.frame(subset(data, data$DESCRIPTION_SHORT=='OVERDOSE'))
 # add a count column for charting
 ods$COUNT <- 1
 str(ods)
+
+
+##############################
+#### read shapefile of census block groups
+
+library(rgdal)
+shape <- readOGR(dsn = "Allegheny_County_Census_Block_Groups_2016/",  
+                 layer = "Allegheny_County_Census_Block_Groups_2016")
+class(shape)
+
